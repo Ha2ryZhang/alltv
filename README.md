@@ -10,7 +10,7 @@
 ```bash
 docker pull harryzhang6/alltv
 
-docker run --rm -it -d --name alltv -p 8888:8888  alltv
+docker run --rm -it -d --name alltv -p 8888:8888  harryzhang6/alltv
 ```
 
 #### 后续开发:
