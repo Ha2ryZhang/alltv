@@ -1,7 +1,7 @@
 package com.debugers.alltv.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.debugers.alltv.dto.DouYuDTO;
+import com.debugers.alltv.model.dto.DouYuDTO;
 import com.debugers.alltv.enumType.DouYuOpenApi;
 import com.debugers.alltv.exception.RoomNotFondException;
 import com.debugers.alltv.result.CodeMsg;

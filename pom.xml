@@ -16,6 +16,11 @@
     </properties>
 
     <dependencies>
+        <!--websocket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
         <!--swagger文档-->
         <dependency>
             <groupId>io.springfox</groupId>

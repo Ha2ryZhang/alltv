@@ -1,7 +1,7 @@
 package com.debugers.alltv.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.debugers.alltv.dto.DouYuDTO;
+import com.debugers.alltv.model.dto.DouYuDTO;
 import com.debugers.alltv.enumType.DouYuOpenApi;
 import com.debugers.alltv.exception.RoomNotFondException;
 import com.debugers.alltv.result.CodeMsg;
@@ -183,7 +183,10 @@ public class DouYuService {
         } catch (NoSuchAlgorithmException | ScriptException e) {
             e.printStackTrace();
         } finally {
-            return realUrl;
+            if ("http://tx2play1.douyucdn.cn/live/null.flv".equals(realUrl))
+                return "未开播或房间不存在";
+            else
+                return realUrl;
         }
     }
 

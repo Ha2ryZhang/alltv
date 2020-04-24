@@ -1,4 +1,4 @@
-package com.debugers.alltv.dto;
+package com.debugers.alltv.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
