@@ -2,6 +2,7 @@ package com.debugers.alltv.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.debugers.alltv.enumType.BilibiliOpenApi;
 import com.debugers.alltv.model.BilibiliServerConfig;
 import com.debugers.alltv.util.http.HttpRequest;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BilibiliService {
     public JSONObject getRealRoomId(String rid) {
-        String room_url = "https://api.live.bilibili.com/room/v1/Room/room_init?id=" + rid;
+        String room_url = BilibiliOpenApi.ROOM_INIT + rid;
         JSONObject response = HttpRequest.create(room_url).get().getBodyJson();
         JSONObject data = response.getJSONObject("data");
         if (data == null) {
@@ -24,7 +25,7 @@ public class BilibiliService {
     }
 
     public BilibiliServerConfig getRoomConfig(String rid) {
-        String configUrl = "https://api.live.bilibili.com/room/v1/Danmu/getConf?id=" + rid;
+        String configUrl = BilibiliOpenApi.SERVER_CONFIG + rid;
         JSONObject response = HttpRequest.create(configUrl).get().getBodyJson();
         return response.getObject("data",BilibiliServerConfig.class);
     }
@@ -38,7 +39,7 @@ public class BilibiliService {
         if (!roomInfo.getBoolean("live_status")) {
             return "未开播";
         }
-        String room_url = "https://api.live.bilibili.com/room/v1/Room/playUrl?cid=" + roomInfo.getLongValue("room_id") + "&platform=h5&otype=json&quality=4";
+        String room_url = BilibiliOpenApi.PLAY_URL.toString() + roomInfo.getLongValue("room_id") + "&platform=h5&otype=json&quality=4";
         JSONObject response = HttpRequest.create(room_url).get().getBodyJson();
         JSONArray durl = response.getJSONObject("data").getJSONArray("durl");
         if (durl != null) {

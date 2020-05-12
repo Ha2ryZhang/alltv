@@ -1,15 +1,17 @@
 package com.debugers.alltv.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.debugers.alltv.model.dto.DouYuDTO;
 import com.debugers.alltv.enumType.DouYuOpenApi;
 import com.debugers.alltv.exception.RoomNotFondException;
+import com.debugers.alltv.model.LiveRoom;
+import com.debugers.alltv.model.dto.DouYuDTO;
 import com.debugers.alltv.result.CodeMsg;
 import com.debugers.alltv.util.MD5Util;
 import com.debugers.alltv.util.http.HttpContentType;
 import com.debugers.alltv.util.http.HttpRequest;
 import com.debugers.alltv.util.http.HttpResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.script.ScriptEngine;
@@ -18,8 +20,10 @@ import javax.script.ScriptException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * 斗鱼直播
@@ -200,6 +204,24 @@ public class DouYuService {
         return getDTO(response.getBodyJson());
     }
 
+    public List<LiveRoom> getTopRoomsByCid(String cid, Integer pageSize, Integer pageNum) {
+        HttpResponse response = HttpRequest.create(DouYuOpenApi.TOP_ROOM + cid)
+                .appendParameter("offset", pageNum)
+                .appendParameter("limit", pageSize)
+                .setContentType(HttpContentType.FORM).get();
+        if (404 == response.getCode())
+            throw new RoomNotFondException(CodeMsg.PAGE_ERROR);
+        List<DouYuDTO> data = response.getBodyJson().getJSONArray("data").toJavaList(DouYuDTO.class);
+        return data.stream().map(this::convertToLiveRoom).collect(Collectors.toList());
+    }
+
+    private LiveRoom convertToLiveRoom(DouYuDTO douYuDTO) {
+        LiveRoom liveRoom = new LiveRoom();
+        BeanUtils.copyProperties(douYuDTO, liveRoom);
+        liveRoom.setCom("douyu");
+        return liveRoom;
+    }
+
     private DouYuDTO getDTO(JSONObject jsonObject) {
         JSONObject data = jsonObject.getJSONObject("data");
         DouYuDTO douYuDTO = new DouYuDTO();
@@ -222,9 +244,4 @@ public class DouYuService {
         return douYuDTO;
     }
 
-    public static void main(String[] args) {
-        DouYuService douYuService = new DouYuService();
-        DouYuDTO roomInfo = douYuService.getRoomInfo("5");
-        System.out.println(roomInfo);
-    }
 }

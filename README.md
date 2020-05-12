@@ -8,9 +8,10 @@
 
 整合了 swagger2 本地运行访问 http://localhost:8888/swagger-ui.html 即可查看api文档
 
+**最近没怎么更新，主要时间写app去了  最下面附上个截图**
 
 #### New Feature
-
+* 已经开始 app开发了 采用 flutter 所以兼容 android 和 ios 
 * 新增触手直播
 * 新增获取bilibili直播间弹幕(websocket 具体食用方法在下面)
 
@@ -107,3 +108,6 @@ docker run --rm -it -d --name alltv -p 8888:8888  harryzhang6/alltv
 - [ ]  可视化web界面
 
 - [ ] 增加其他平台获取弹幕(websocket)
+
+### AllTV app（努力中）别忘了点star哦
+![testwebsocket](./images/alltv.jpeg)

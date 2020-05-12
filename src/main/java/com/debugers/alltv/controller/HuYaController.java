@@ -27,6 +27,7 @@ public class HuYaController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roomId", value = "房间号", required = true, dataType = "String"),
     })
+
     @GetMapping("real_url/{roomId}")
     public Result<Map<String, String>> getRealUrl(@PathVariable(value = "roomId", required = true) String roomId){
         Map<String, String> result = new HashMap<>();

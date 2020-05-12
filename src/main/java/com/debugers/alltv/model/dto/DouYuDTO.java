@@ -1,34 +1,31 @@
 package com.debugers.alltv.model.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
-@ApiModel(description = "斗鱼房间信息")
 public class DouYuDTO {
-    @ApiModelProperty("房间id")
+    @JSONField(name = "room_id")
     private String roomId;
-    @ApiModelProperty(value = "直播分类id",example = "1")
+    @JSONField(name = "cate_id")
     private String cateId;
-    @ApiModelProperty("房间预览缩略图")
+    @JSONField(name = "room_src")
     private String roomThumb;
-    @ApiModelProperty("分类名")
+    @JSONField(name = "game_name")
     private String cateName;//分类名
-    @ApiModelProperty("房间名")
+    @JSONField(name = "room_name")
     private String roomName;
-    @ApiModelProperty(value = "开播状态",notes = "1 开播 2 未开播")
+    @JSONField(name = "show_status")
     private Integer roomStatus; //1 开播 2 未开播
-    @ApiModelProperty("本次开播时间,如果没开播则是上一次开播时间")
+    @JSONField(name = "show_time")
     private Date startTime;
-    @ApiModelProperty("主播名")
+    @JSONField(name = "nickname")
     private String ownerName;
-    @ApiModelProperty("主播头像")
+    @JSONField(name = "avatar")
     private String avatar;
-    @ApiModelProperty("斗鱼热度")
-    private Long online; //斗鱼叫热度
-    @ApiModelProperty("真实直播源地址")
+    @JSONField(name = "online")
+    private Long online; //热度
     private String realUrl; //真是直播地址
 }

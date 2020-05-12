@@ -7,7 +7,8 @@ package com.debugers.alltv.enumType;
 public enum DouYuOpenApi {
     //统一后面+roomId
     ROOM_INFO("http://open.douyucdn.cn/api/RoomApi/room/"),
-    TOP_ROOM("http://open.douyucdn.cn/api/RoomApi/live/"),
+    SIMPLE_TOP_ROOM("http://open.douyucdn.cn/api/RoomApi/live/"),
+    TOP_ROOM("http://api.douyutv.com/api/v1/live/")
     ;
 
     private String url;

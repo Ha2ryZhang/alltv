@@ -1,9 +1,9 @@
 package com.debugers.alltv.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.debugers.alltv.model.dto.DouYuDTO;
 import com.debugers.alltv.enumType.DouYuOpenApi;
 import com.debugers.alltv.exception.RoomNotFondException;
+import com.debugers.alltv.model.dto.DouYuDTO;
 import com.debugers.alltv.result.CodeMsg;
 import com.debugers.alltv.result.Result;
 import com.debugers.alltv.service.DouYuService;
@@ -77,7 +77,7 @@ public class DouYuController {
                 .setContentType(HttpContentType.FORM).get();
         if (404 == response.getCode())
             throw new RoomNotFondException(CodeMsg.PAGE_ERROR);
-
+        JSONArray data = response.getBodyJson().getJSONArray("data");
         return Result.success(response.getBodyJson().getJSONArray("data"));
 
     }
