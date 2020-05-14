@@ -6,6 +6,7 @@ import com.debugers.alltv.service.DouYuService;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Api(tags = "综合各个平台")
@@ -19,7 +20,8 @@ public class TopController {
     }
     @GetMapping("live/{cid}")
     public Result<List<LiveRoom>> getTopRooms(@PathVariable("cid") String cid, @RequestParam(defaultValue = "0") Integer pageNum){
-        List<LiveRoom> rooms = douYuService.getTopRoomsByCid(cid, 10, pageNum);
+        List<LiveRoom> rooms = douYuService.getTopRoomsByCid(cid, 20, pageNum);
+        Collections.sort(rooms);
         return Result.success(rooms);
     }
 }

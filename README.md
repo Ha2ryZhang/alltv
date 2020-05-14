@@ -110,4 +110,4 @@ docker run --rm -it -d --name alltv -p 8888:8888  harryzhang6/alltv
 - [ ] 增加其他平台获取弹幕(websocket)
 
 ### AllTV app（努力中）别忘了点star哦
-![testwebsocket](./images/alltv.jpeg)
+![alltv_flutter](./images/alltv.jpeg)

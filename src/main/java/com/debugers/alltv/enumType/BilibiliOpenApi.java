@@ -9,7 +9,8 @@ public enum BilibiliOpenApi {
     //统一后面+roomId
     SERVER_CONFIG("https://api.live.bilibili.com/room/v1/Danmu/getConf?id="),
     ROOM_INIT("https://api.live.bilibili.com/room/v1/Room/room_init?id="),
-    PLAY_URL("https://api.live.bilibili.com/room/v1/Room/playUrl?cid=")
+    PLAY_URL("https://api.live.bilibili.com/room/v1/Room/playUrl?cid="),
+    RANK("https://api.live.bilibili.com/room/v1/RoomRecommend/biliIndexRecList")
     ;
 
     private String url;

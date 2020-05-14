@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class LiveRoom {
+public class LiveRoom implements Comparable<LiveRoom> {
     private String roomId;
     private String com;//哪个平台
     private String cateId;
@@ -18,4 +18,9 @@ public class LiveRoom {
     private String avatar;
     private Long online; //热度
     private String realUrl; //真是直播地址
+
+    @Override
+    public int compareTo(LiveRoom room) {
+        return (int) (room.getOnline()-online);
+    }
 }

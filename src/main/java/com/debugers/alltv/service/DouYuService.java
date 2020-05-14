@@ -204,9 +204,17 @@ public class DouYuService {
         return getDTO(response.getBodyJson());
     }
 
+    /**
+     * 获取斗鱼推荐直播间
+     *
+     * @param cid      分类id
+     * @param pageSize 页数大小
+     * @param pageNum  页数
+     * @return liveRoom
+     */
     public List<LiveRoom> getTopRoomsByCid(String cid, Integer pageSize, Integer pageNum) {
         HttpResponse response = HttpRequest.create(DouYuOpenApi.TOP_ROOM + cid)
-                .appendParameter("offset", pageNum)
+                .appendParameter("offset", (pageNum - 1) * pageSize)
                 .appendParameter("limit", pageSize)
                 .setContentType(HttpContentType.FORM).get();
         if (404 == response.getCode())
@@ -221,7 +229,6 @@ public class DouYuService {
         liveRoom.setCom("douyu");
         return liveRoom;
     }
-
     private DouYuDTO getDTO(JSONObject jsonObject) {
         JSONObject data = jsonObject.getJSONObject("data");
         DouYuDTO douYuDTO = new DouYuDTO();
