@@ -10,7 +10,7 @@ public enum BilibiliOpenApi {
     SERVER_CONFIG("https://api.live.bilibili.com/room/v1/Danmu/getConf?id="),
     ROOM_INIT("https://api.live.bilibili.com/room/v1/Room/room_init?id="),
     PLAY_URL("https://api.live.bilibili.com/room/v1/Room/playUrl?cid="),
-    RANK("https://api.live.bilibili.com/room/v1/RoomRecommend/biliIndexRecList")
+    RANK("https://api.live.bilibili.com/room/v1/Area/getListByAreaID")
     ;
 
     private String url;

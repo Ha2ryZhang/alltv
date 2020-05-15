@@ -4,8 +4,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.debugers.alltv.enumType.BilibiliOpenApi;
 import com.debugers.alltv.model.BilibiliServerConfig;
+import com.debugers.alltv.model.LiveRoom;
+import com.debugers.alltv.model.dto.BilibiliDTO;
 import com.debugers.alltv.util.http.HttpRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BilibiliService {
@@ -29,7 +35,26 @@ public class BilibiliService {
         JSONObject response = HttpRequest.create(configUrl).get().getBodyJson();
         return response.getObject("data",BilibiliServerConfig.class);
     }
+    public List<LiveRoom> getTopRooms(Integer areaId,Integer pageSize,Integer page){
+        //?areaId=0&sort=online&pageSize=10&page=1
+        JSONObject bodyJson = HttpRequest.create(BilibiliOpenApi.RANK.getValue())
+                .appendParameter("sort","online")
+                .appendParameter("areaId",areaId)
+                .appendParameter("pageSize",pageSize)
+                .appendParameter("page",page)
+                .get().getBodyJson();
+        List<BilibiliDTO> data = bodyJson.getJSONArray("data").toJavaList(BilibiliDTO.class);
+       return data.stream().map(this::convertToLiveRoom).collect(Collectors.toList());
+    }
+    private LiveRoom convertToLiveRoom(BilibiliDTO dto){
+        LiveRoom liveRoom = new LiveRoom();
+        BeanUtils.copyProperties(dto, liveRoom);
+        liveRoom.setCom("bilibili");
+        liveRoom.setRoomStatus(1);
+        liveRoom.setCateId(dto.getArea()+"-"+dto.getArea_v2_id());
+        return liveRoom;
 
+    }
     public String getRealUrl(String rid) {
         JSONObject roomInfo = getRealRoomId(rid);
 
