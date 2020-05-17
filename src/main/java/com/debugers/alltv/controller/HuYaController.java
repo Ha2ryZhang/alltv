@@ -1,5 +1,6 @@
 package com.debugers.alltv.controller;
 
+import com.debugers.alltv.model.LiveRoom;
 import com.debugers.alltv.result.Result;
 import com.debugers.alltv.service.HuYaService;
 import io.swagger.annotations.Api;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Api(tags = "虎牙直播")
@@ -33,5 +35,9 @@ public class HuYaController {
         Map<String, String> result = new HashMap<>();
         result.put("realUrl", huYaService.getRealUrl(roomId));
         return Result.success(result);
+    }
+    @GetMapping("top_rooms")
+    public Result<List<LiveRoom>> getTopRooms(){
+        return Result.success(huYaService.getTopRooms());
     }
 }
