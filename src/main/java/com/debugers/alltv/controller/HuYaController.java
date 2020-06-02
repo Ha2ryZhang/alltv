@@ -25,24 +25,27 @@ public class HuYaController {
     public HuYaController(HuYaService huYaService) {
         this.huYaService = huYaService;
     }
+
     @ApiOperation("获取直播真实地址")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "roomId", value = "房间号", required = true, dataType = "String"),
     })
 
     @GetMapping("real_url/{roomId}")
-    public Result<Map<String, String>> getRealUrl(@PathVariable(value = "roomId", required = true) String roomId){
+    public Result<Map<String, String>> getRealUrl(@PathVariable(value = "roomId", required = true) String roomId) {
         Map<String, String> result = new HashMap<>();
         result.put("realUrl", huYaService.getRealUrl(roomId));
         return Result.success(result);
     }
+
     @GetMapping("top_rooms")
-    public Result<List<LiveRoom>> getTopRooms(Integer pageNum, Integer pageSize){
-        return Result.success(huYaService.getTopRooms(pageNum,pageSize));
+    public Result<List<LiveRoom>> getTopRooms(Integer pageNum, Integer pageSize) {
+        return Result.success(huYaService.getTopRooms(pageNum, pageSize));
     }
+
     @GetMapping("checkLiveStatus")
-    public Result<Boolean> checkLiveStatus(String roomId){
+    public Result<Boolean> checkLiveStatus(String roomId) {
         String url = huYaService.getRealUrl(roomId);
-        return Result.success(url.contains("http"));
+        return Result.success(url.contains(".m3u8") && !url.contains("replay"));
     }
 }

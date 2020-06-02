@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Service
 public class HuYaService {
     private final StringRedisTemplate redisTemplate;
-    private static final Pattern PATTERN = Pattern.compile("(?<=hasvedio: ')(.*\\.m3u8)");
+    private static final Pattern PATTERN = Pattern.compile("liveLineUrl = \"([\\s\\S]*?)\";");
 
     public HuYaService(StringRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -38,13 +38,10 @@ public class HuYaService {
         if (StringUtils.isBlank(result)) {
             return "未开播或直播间不存在";
         }
-        if (result.startsWith("//"))
-            result = "https:" + result;
-//        return result.replaceAll("_\\d{3,4}\\.m3u8", ".flv");
-        result = "https://al.rtmp" + result.substring(result.indexOf(".huya.com"));
-        return result; //默认清晰度
+        System.out.println(result);
+        result = result.substring(result.indexOf("//"), result.lastIndexOf("\""));
+        return "https:" + result; //默认清晰度
     }
-
 
     public List<LiveRoom> getTopRooms(Integer pageNum, Integer pageSize) {
         List<String> list = redisTemplate.opsForList().range("Huya", (pageNum - 1) * pageNum, pageSize);

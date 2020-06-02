@@ -1,7 +1,6 @@
 # alltv
-一个app 看全网直播(已有beta版本)
 获取 斗鱼、虎牙、bilibili、企鹅电竞直播源、弹幕信息
-
+#### app项目地址：[alltv_flutter](https://github.com/ha2ryzhang/alltv_flutter)
 #### 预览地址：[在线api文档](http://debugers.com:8888/swagger-ui.html)
 #### apk下载地址: [蓝奏云](https://alltv.lanzous.com/b01bexnha)
 **基于flutter 开发 理论支持ios和android 但目前就build了安卓的，没有ios真机测试。**
@@ -110,5 +109,6 @@ docker run --rm -it -d --name alltv -p 8888:8888  harryzhang6/alltv
 
 - [ ] 增加其他平台获取弹幕(websocket)
 
-### AllTV app（努力中）别忘了点star哦
+* 2020.6.2 修复虎牙直播
+### AllTV app 别忘了点star哦
 ![alltv_flutter](./images/alltv.jpeg)
