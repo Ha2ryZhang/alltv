@@ -50,7 +50,7 @@ public class EGameService {
     }
 
     public List<LiveRoom> getTopRooms(Integer pageNum, Integer pageSize) {
-        List<String> list = redisTemplate.opsForList().range("Qie", (pageNum - 1) * pageSize, (pageNum - 1) * pageNum + pageSize);
+        List<String> list = redisTemplate.opsForList().range("Qie", (pageNum - 1) * pageSize, (pageNum - 1) * pageSize + pageSize);
         List<LiveRoom> liveRooms = new ArrayList<>();
         if (list != null) {
             liveRooms = list.stream().map(s -> {
