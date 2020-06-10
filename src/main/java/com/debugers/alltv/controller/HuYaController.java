@@ -48,4 +48,9 @@ public class HuYaController {
         String url = huYaService.getRealUrl(roomId);
         return Result.success(url.contains(".m3u8") && !url.contains("replay"));
     }
+    @ApiOperation("虎牙搜索")
+    @GetMapping("search")
+    public Result<List<LiveRoom>> search(String keyword) {
+        return Result.success(huYaService.search(keyword));
+    }
 }

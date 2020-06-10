@@ -95,4 +95,9 @@ public class DouYuController {
         Boolean live = douYuService.isLive(roomId);
         return Result.success(live);
     }
+    @ApiOperation("斗鱼搜索")
+    @GetMapping("search")
+    public Result<List<LiveRoom>> search(String keyword) {
+        return Result.success(douYuService.search(keyword));
+    }
 }

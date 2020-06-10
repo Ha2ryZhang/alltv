@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.debugers</groupId>
     <artifactId>alltv</artifactId>
-    <version>0.1.0</version>
+    <version>1.2.0</version>
     <name>alltv</name>
     <description>get the source url for live tv</description>
 

@@ -10,6 +10,7 @@ import com.debugers.alltv.util.MD5Util;
 import com.debugers.alltv.util.http.HttpContentType;
 import com.debugers.alltv.util.http.HttpRequest;
 import com.debugers.alltv.util.http.HttpResponse;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -223,11 +224,36 @@ public class DouYuService {
         return data.stream().map(this::convertToLiveRoom).collect(Collectors.toList());
     }
 
-    public Boolean isLive(String roomId){
-        HttpResponse response = HttpRequest.create(DouYuOpenApi.ROOM_INFO.getValue()+roomId).get();
+    public Boolean isLive(String roomId) {
+        HttpResponse response = HttpRequest.create(DouYuOpenApi.ROOM_INFO.getValue() + roomId).get();
         int room_status = response.getBodyJson().getJSONObject("data").getIntValue("room_status");
         //默认斗鱼1为开播，2为没开播状态
-        return room_status==1;
+        return room_status == 1;
+    }
+
+    public List<LiveRoom> search(String keyWords) {
+        HttpResponse response = HttpRequest.create(DouYuOpenApi.SEARCH.getValue())
+                .appendParameter("sk", keyWords).post();
+        List<SearchResult> results = response.getBodyJson().getJSONObject("data").getJSONArray("room").toJavaList(SearchResult.class);
+
+        return results.stream().map(result -> {
+            LiveRoom room = new LiveRoom();
+            BeanUtils.copyProperties(result, room);
+            //1 开播 2 未开播
+            room.setRoomStatus(result.getIsLive() == 0 ? 2 : 1);
+            room.setRoomThumb(result.getRoomSrc());
+            room.setOwnerName(result.getNickname());
+            room.setRoomId(result.getRoomId() + "");
+            room.setCom("douyu");
+            room.setCateId(result.getCid2() + "");
+            if (result.getHn().contains("万")) {
+                Double online = Double.parseDouble(result.getHn().replaceAll("万", ""))*10000;
+                room.setOnline(online.longValue());
+            } else {
+                room.setOnline(Long.parseLong(result.getHn()));
+            }
+            return room;
+        }).collect(Collectors.toList());
     }
 
     private LiveRoom convertToLiveRoom(DouYuDTO douYuDTO) {
@@ -236,6 +262,7 @@ public class DouYuService {
         liveRoom.setCom("douyu");
         return liveRoom;
     }
+
     private DouYuDTO getDTO(JSONObject jsonObject) {
         JSONObject data = jsonObject.getJSONObject("data");
         DouYuDTO douYuDTO = new DouYuDTO();
@@ -258,4 +285,25 @@ public class DouYuService {
         return douYuDTO;
     }
 
+    /**
+     * 斗鱼搜索结果
+     */
+    @Data
+    static class SearchResult {
+        private String cateName;
+        private String roomName;
+        private int isVertical;
+        private String verticalSrc;
+        private String hn;
+        private int isLive;
+        private String nickname;
+        private int ownerUID;
+        private String roomSrc;
+        private int roomId;
+        private int vipId;
+        private int cid1;
+        private int cid2;
+        private String avatar;
+        private String official;
+    }
 }
