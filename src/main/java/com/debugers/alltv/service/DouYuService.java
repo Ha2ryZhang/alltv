@@ -72,7 +72,7 @@ public class DouYuService {
             return null;
         }
 
-        String result[] = matcher.group().split("\n");
+        String[] result = matcher.group().split("\n");
         String str1 = result[0].replaceAll("eval.*;", "strc;");
         String homejs = str1 + result[1];
 
@@ -86,15 +86,14 @@ public class DouYuService {
         ub9 += "ub98484234();";
         ScriptEngine docjs = new ScriptEngineManager().getEngineByName("javascript");
         String res2 = docjs.eval(ub9).toString();
-        String str3 = res2.replaceAll("\\(function[\\s\\S]*toString\\(\\)", "\'");
+        String str3 = res2.replaceAll("\\(function[\\s\\S]*toString\\(\\)", "'");
         String md5rb = MD5Util.md5String(rid + "10000000000000000000000000001501" + tt + "2501" + post_v);
-        String str4 = "function get_sign(){var rb=\'" + md5rb + str3;
+        String str4 = "function get_sign(){var rb='" + md5rb + str3;
         String str5 = str4.replaceAll("return rt;}[\\s\\S]*", "return re;};");
         String str6 = str5.replaceAll("\"v=.*&sign=\"\\+", "");
         str6 += "get_sign(" + rid + ",\"10000000000000000000000000001501\",\"" + tt + "\")";
-        String sign = docjs.eval(str6).toString();
 
-        return sign;
+        return docjs.eval(str6).toString();
     }
 
     private String mixRoom(String rid) {
@@ -177,6 +176,7 @@ public class DouYuService {
                 realUrl = "http://tx2play1.douyucdn.cn/live/" + url + ".flv";
             } else {
                 JSONObject result = getHomeJs(rid);
+                assert result != null;
                 String real_rid = result.getString("real_rid");
                 String homejs = result.getString("homejs");
                 String real_url = getSignUrl(today, real_rid, tt1, homejs);
@@ -189,10 +189,9 @@ public class DouYuService {
             e.printStackTrace();
         } finally {
             if ("http://tx2play1.douyucdn.cn/live/null.flv".equals(realUrl))
-                return "未开播或房间不存在";
-            else
-                return realUrl;
+                realUrl = "未开播或房间不存在";
         }
+        return realUrl;
     }
 
     public DouYuDTO getRoomInfo(String roomId) {
@@ -247,7 +246,7 @@ public class DouYuService {
             room.setCom("douyu");
             room.setCateId(result.getCid2() + "");
             if (result.getHn().contains("万")) {
-                Double online = Double.parseDouble(result.getHn().replaceAll("万", ""))*10000;
+                Double online = Double.parseDouble(result.getHn().replaceAll("万", "")) * 10000;
                 room.setOnline(online.longValue());
             } else {
                 room.setOnline(Long.parseLong(result.getHn()));

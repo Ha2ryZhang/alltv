@@ -46,7 +46,7 @@ public class HuYaService {
     }
 
     public List<LiveRoom> getTopRooms(Integer pageNum, Integer pageSize) {
-        List<String> list = redisTemplate.opsForList().range("Huya", (pageNum - 1) * pageSize, (pageNum - 1) * pageSize + pageSize);
+        List<String> list = redisTemplate.opsForList().range("Huya", (long) (pageNum - 1) * pageSize, (long) (pageNum - 1) * pageSize + pageSize);
         List<LiveRoom> liveRooms = new ArrayList<>();
         if (list != null) {
             liveRooms = list.stream().map(s -> {
