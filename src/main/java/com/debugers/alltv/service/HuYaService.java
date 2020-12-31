@@ -7,7 +7,7 @@ import com.debugers.alltv.util.http.HttpContentType;
 import com.debugers.alltv.util.http.HttpRequest;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,12 +18,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class HuYaService {
-    private final StringRedisTemplate redisTemplate;
+    private final RedisTemplate<String, LiveRoom> redisTemplate;
     private static final Pattern PATTERN = Pattern.compile("liveLineUrl = \"([\\s\\S]*?)\";");
 
-    public HuYaService(StringRedisTemplate redisTemplate) {
+    public HuYaService(RedisTemplate<String, LiveRoom> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
+
 
     public String getRealUrl(String roomId) {
         String room_url = "https://m.huya.com/" + roomId;
@@ -33,12 +34,11 @@ public class HuYaService {
                 .get().getBody();
         Matcher matcher = PATTERN.matcher(response);
         if (!matcher.find()) {
-            return null;
+            return "未开播或直播间不存在";
         }
         String result = matcher.group();
-
-        if (StringUtils.isBlank(result)) {
-            return "未开播或直播间不存在";
+        if (result.contains("replay")){
+            return "";
         }
         System.out.println(result);
         result = result.substring(result.indexOf("//"), result.lastIndexOf("\""));
@@ -46,14 +46,7 @@ public class HuYaService {
     }
 
     public List<LiveRoom> getTopRooms(Integer pageNum, Integer pageSize) {
-        List<String> list = redisTemplate.opsForList().range("Huya", (long) (pageNum - 1) * pageSize, (long) (pageNum - 1) * pageSize + pageSize);
-        List<LiveRoom> liveRooms = new ArrayList<>();
-        if (list != null) {
-            liveRooms = list.stream().map(s -> {
-                return JSONObject.parseObject(s, LiveRoom.class);
-            }).collect(Collectors.toList());
-        }
-        return liveRooms;
+        return redisTemplate.opsForList().range("huya", (long) (pageNum - 1) * pageSize, ((long) pageNum * pageSize) - 1);
     }
 
     public List<LiveRoom> search(String keyword) {

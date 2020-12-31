@@ -2,10 +2,11 @@ package com.debugers.alltv.model;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class LiveRoom implements Comparable<LiveRoom> {
+public class LiveRoom implements Comparable<LiveRoom>, Serializable {
     private String roomId;//房间号
     private String com;//哪个平台
     private String cateId;//分类id

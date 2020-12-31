@@ -97,11 +97,10 @@ public class GlobalExceptionHandler {
 		return Result.error(CodeMsg.BIND_ERROR.fillArgs(mg));
 	}
 
-	@ExceptionHandler(value = Exception.class)
-	public Result<String> exception(Exception exception) {
-		log.error("错误信息", exception.fillInStackTrace());
-		exception.printStackTrace();
-		return Result.error(CodeMsg.SERVER_ERROR);
-	}
+//	@ExceptionHandler(value = Exception.class)
+//	public Result<String> exception(Exception exception) {
+//		log.error("错误信息", exception.fillInStackTrace());
+//		return Result.error(CodeMsg.SERVER_ERROR);
+//	}
 
 }

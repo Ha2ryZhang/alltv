@@ -15,10 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -86,7 +83,7 @@ public class DouYuController {
     }
 
     @GetMapping("top_rooms")
-    public Result<List<LiveRoom>> getTopRooms(Integer pageNum, Integer pageSize) {
+    public Result<List<LiveRoom>> getTopRooms(@RequestParam(defaultValue = "1")Integer pageNum,@RequestParam(defaultValue = "10") Integer pageSize) {
         return Result.success(douYuService.getTopRoomsByCid("0", pageSize, pageNum));
     }
 

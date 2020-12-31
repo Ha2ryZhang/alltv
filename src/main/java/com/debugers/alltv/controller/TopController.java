@@ -34,10 +34,10 @@ public class TopController {
         if ("0".equals(cid)){
             List<LiveRoom> topRooms = bilibiliService.getTopRooms(0, 10, pageNum);
             List<LiveRoom> topRoomsHuya = huYaService.getTopRooms(pageNum,10);
-            List<LiveRoom> topRoomsEGame = eGameService.getTopRooms(pageNum,10);
+//            List<LiveRoom> topRoomsEGame = eGameService.getTopRooms(pageNum,10);
             rooms.addAll(topRooms);
             rooms.addAll(topRoomsHuya);
-            rooms.addAll(topRoomsEGame);
+//            rooms.addAll(topRoomsEGame);
         }
         Collections.sort(rooms);
         return Result.success(rooms);
