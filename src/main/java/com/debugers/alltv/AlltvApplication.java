@@ -9,6 +9,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class AlltvApplication {
 
     public static void main(String[] args) {
+        System.setProperty("spring.config.additional-location",
+                "file:${user.home}/.alltv/");
+        System.out.println(System.getProperty("spring.config.additional-location"));
         SpringApplication.run(AlltvApplication.class, args);
     }
 

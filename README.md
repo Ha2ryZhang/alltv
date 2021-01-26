@@ -21,10 +21,19 @@
 
 #### docker (已更新)
 
+1. 将[application.yaml模板复制到配置目录](application-tmp.yaml)
+```bash
+mkdir ~/.alltv
+cd ~/.alltv
+//需要配置application.yaml
+//这里将配置文件复制过来就好 docker 映射的目录在 ~/.alltv 自行修改redis 配置
+```
 ```bash
 docker pull harryzhang6/alltv
 
-docker run --rm -it -d --name alltv -p 8888:8888  harryzhang6/alltv
+//这里redis也使用docker
+docker run -itd --name redis -p 6060:6379 redis
+docker run --rm -it -d --net host --name alltv -p 8888:8888 -v ~/.alltv:/root/.alltv  harryzhang6/alltv
 ```
 #### 后续开发:
 
