@@ -4,12 +4,13 @@
 #### 预览地址：[在线api文档](http://debugers.com:8888/swagger-ui.html)
 #### apk下载地址: [蓝奏云](https://alltv.lanzous.com/b01bexnha)
 **基于flutter 开发 理论支持ios和android 但目前就build了安卓的，没有ios真机测试。**
-**releases里面也可以下载**目前功能还不是很全，简单观看还是没问题的，后面会考虑将前端开源合并进来。
 #### 弹幕预览请移步下面
 整合了 swagger2 本地运行访问 http://localhost:8888/swagger-ui.html 即可查看api文档
 
+#### 很不幸 触手没了(停服)
 
 #### New Feature
+* 2021.01.26： 将爬虫整合到一起 spring task 管理 依赖 redis 
 * 2020.06.10： 增加搜索功能
 * 2020.06.02： 修复虎牙直播
 * 已经开始 app开发了 采用 flutter 所以兼容 android 和 ios 
@@ -36,6 +37,7 @@ docker run --rm -it -d --name alltv -p 8888:8888  harryzhang6/alltv
 - [x] 增加app 可视化
 
 - [ ] 增加其他平台获取弹幕(websocket)
+- [ ] 增加影视 和 卫视直播 
 
 
 ### AllTV app 别忘了点star哦

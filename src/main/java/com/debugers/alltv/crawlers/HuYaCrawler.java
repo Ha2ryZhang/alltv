@@ -44,6 +44,9 @@ public class HuYaCrawler {
             room.setOwnerName(element.select(".txt>.avatar>.nick").attr("title"));
             room.setOnline((long) (Double.parseDouble(element.select(".txt>.num>.js-num").html().replaceAll("万", "")) * 10000));
             room.setRoomThumb(element.select(".video-info >.pic").attr("data-original"));
+            if(room.getRoomThumb().startsWith("//")){
+                room.setRoomThumb("http:"+room.getRoomThumb());
+            }
             room.setCateName(element.select(".txt>.game-type>a").attr("title"));
             room.setCateId(gameTypeUrl.substring(gameTypeUrl.indexOf(("g/")) + 2));
             return room;
