@@ -40,7 +40,6 @@ public class HuYaService {
         if (result.contains("replay")){
             return "";
         }
-        System.out.println(result);
         result = result.substring(result.indexOf("//"), result.lastIndexOf("\""));
         return "https:" + result; //默认清晰度
     }
@@ -62,7 +61,6 @@ public class HuYaService {
                 .appendParameter("start", 0)
                 .appendParameter("rows", 8)
                 .get().getBodyJson();
-        System.out.println(bodyJson);
         //主播
         JSONArray data = bodyJson.getJSONObject("response").getJSONObject("1").getJSONArray("docs");
         List<SearchResult> results = data.toJavaList(SearchResult.class);
