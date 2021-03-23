@@ -15,10 +15,10 @@ public class UpdateController {
     public Result<VersionInfo> getLatestVersion() {
         VersionInfo versionInfo = new VersionInfo();
         versionInfo.setClientVersionCode(1);
-        versionInfo.setClientVersionName("1.3.1");
-        versionInfo.setServerVersion("1.3.1");
-        versionInfo.setLastUpdateTime("2021-03-21");
-        versionInfo.setNewVersionUrl("https://github.com/Ha2ryZhang/alltv_flutter/releases");
+        versionInfo.setClientVersionName("1.3.3");
+        versionInfo.setServerVersion("1.3.3");
+        versionInfo.setLastUpdateTime("2021-03-23");
+        versionInfo.setNewVersionUrl("https://alltv.lanzous.com/b01bexnha");
         return Result.success(versionInfo);
     }
 }

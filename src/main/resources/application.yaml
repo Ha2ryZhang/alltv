@@ -20,3 +20,6 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
 server:
   port: 8888
+logging:
+  level:
+    root: info

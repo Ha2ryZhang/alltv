@@ -52,6 +52,7 @@ public class HuYaCrawler {
             return room;
         }).sorted().collect(Collectors.toList());
         Collections.reverse(liveRooms);
+        redisTemplate.delete("huya");
         redisTemplate.opsForList().leftPushAll("huya",liveRooms);
     }
 }

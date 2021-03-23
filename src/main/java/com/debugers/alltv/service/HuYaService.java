@@ -38,8 +38,9 @@ public class HuYaService {
         }
         String result = matcher.group();
         if (result.contains("replay")){
-            return "";
+            return "回放";
         }
+//        System.out.println(result);
         result = result.substring(result.indexOf("//"), result.lastIndexOf("\""));
         return "https:" + result; //默认清晰度
     }
