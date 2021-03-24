@@ -17,7 +17,7 @@ public class UpdateController {
         versionInfo.setClientVersionCode(1);
         versionInfo.setClientVersionName("1.3.3");
         versionInfo.setServerVersion("1.3.3");
-        versionInfo.setLastUpdateTime("2021-03-23");
+        versionInfo.setLastUpdateTime("2021-03-24");
         versionInfo.setNewVersionUrl("https://alltv.lanzous.com/b01bexnha");
         return Result.success(versionInfo);
     }
