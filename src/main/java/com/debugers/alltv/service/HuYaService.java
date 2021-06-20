@@ -6,10 +6,12 @@ import com.debugers.alltv.model.LiveRoom;
 import com.debugers.alltv.util.http.HttpContentType;
 import com.debugers.alltv.util.http.HttpRequest;
 import lombok.Data;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -36,14 +38,14 @@ public class HuYaService {
         if (!matcher.find()) {
             return "未开播或直播间不存在";
         }
-        String result = matcher.group();
-
+        String result = matcher.group(1);
+        result=new String(Base64.decodeBase64(result),StandardCharsets.UTF_8);
         if (result.contains("replay")|| !result.contains("//")){
             return "";
         }
 
-        result = result.substring(result.indexOf("//"), result.lastIndexOf("\""));
-        return "https:" + result; //默认清晰度
+        result = result.substring(result.indexOf("//"));
+        return "http:" + result; //默认清晰度
     }
 
     public List<LiveRoom> getTopRooms(Integer pageNum, Integer pageSize) {

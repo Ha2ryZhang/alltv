@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class DouYuService {
     private static final Pattern PATTERN = Pattern.compile("(function ub9.*)[\\s\\S](var.*)");
     private static final Pattern PATTERN2 = Pattern.compile("(?<=/live/).*(?=/playlist)");
-    private static final Pattern PATTERN3 = Pattern.compile("^[0-9a-zA-Z]*");
+    private static final Pattern PATTERN3 = Pattern.compile("(\\d{1,7}[0-9a-zA-Z]+)_?\\d{0,4}(/playlist|.m3u8)");
 
     public String getTimeStr(long time, String format) {
         Date date = new Date(time);
@@ -118,15 +118,11 @@ public class DouYuService {
         String preUrl = "";
         if (response.getIntValue("error") == 0) {
             String real_url = (response.getJSONObject("data")).getString("rtmp_live");
-            if (real_url.contains("mix=1")) {
-                preUrl = mixRoom(rid);
-            } else {
                 Matcher matcher = PATTERN3.matcher(real_url);
                 if (!matcher.find()) {
                     return null;
                 }
-                preUrl = matcher.group();
-            }
+                preUrl = matcher.group(1);
         }
 
         return preUrl;
@@ -173,7 +169,7 @@ public class DouYuService {
         try {
             String url = getPreUrl(rid, tt2);
             if (StringUtils.isNotBlank(url)) {
-                realUrl = "http://tx2play1.douyucdn.cn/live/" + url + ".flv";
+                realUrl = "http://dyscdnali1.douyucdn.cn/live/" + url + ".flv";
             } else {
                 JSONObject result = getHomeJs(rid);
                 assert result != null;
@@ -183,12 +179,12 @@ public class DouYuService {
                 if (StringUtils.isBlank(real_url)) {
                     realUrl = "未开播";
                 }
-                realUrl = "http://tx2play1.douyucdn.cn/live/" + real_url + ".flv";
+                realUrl = "http://dyscdnali1.douyucdn.cn/live/" + real_url + ".flv";
             }
         } catch (NoSuchAlgorithmException | ScriptException e) {
             e.printStackTrace();
         } finally {
-            if ("http://tx2play1.douyucdn.cn/live/null.flv".equals(realUrl))
+            if ("http://dyscdnali1.douyucdn.cn/live/null.flv".equals(realUrl))
                 realUrl = "未开播或房间不存在";
         }
         return realUrl;
