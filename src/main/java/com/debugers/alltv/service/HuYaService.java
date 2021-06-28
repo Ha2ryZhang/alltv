@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class HuYaService {
     private final RedisTemplate<String, LiveRoom> redisTemplate;
-    private static final Pattern PATTERN = Pattern.compile("liveLineUrl = \"([\\s\\S]*?)\";");
+    private static final Pattern PATTERN = Pattern.compile("\"liveLineUrl\":\"([\\s\\S]*?)\"");
 
     public HuYaService(RedisTemplate<String, LiveRoom> redisTemplate) {
         this.redisTemplate = redisTemplate;
