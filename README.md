@@ -2,7 +2,7 @@
 获取 斗鱼、虎牙、bilibili、企鹅电竞直播源、弹幕信息
 #### app项目地址：[alltv_flutter](https://github.com/ha2ryzhang/alltv_flutter)
 #### 预览地址：[在线api文档](http://debugers.com:8888/swagger-ui.html)
-#### apk下载地址: [蓝奏云](https://alltv.lanzous.com/b01bexnha)
+#### apk下载地址: [蓝奏云](https://alltv.lanzoui.com/b01bexnha)
 **基于flutter 开发 理论支持ios和android 但目前就build了安卓的，没有ios真机测试。**
 #### 弹幕预览请移步下面
 整合了 swagger2 本地运行访问 http://localhost:8888/swagger-ui.html 即可查看api文档
